@@ -2180,7 +2180,7 @@ class Instagram
             throw new InstagramAuthException("User credentials not provided");
         }
 
-        if ($twoStepVerificator === true) {
+        if (is_null($twoStepVerificator)) {
             $twoStepVerificator = new ConsoleVerification();
         }
 
