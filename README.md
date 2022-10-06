@@ -11,7 +11,7 @@ This library is based on the Instagram web version. We develop it because nowada
 ```php
 use Phpfastcache\Helper\Psr16Adapter;
 
-$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), 'username', 'password', new Psr16Adapter('Files'));
+$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), 'username', 'password');
 $instagram->login();
 $account = $instagram->getAccountById(3);
 echo $account->getUsername();
@@ -29,7 +29,7 @@ If you use authentication it is recommended to cache the user session. In this c
 ```php
 use Phpfastcache\Helper\Psr16Adapter;
 
-$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), 'username', 'password', new Psr16Adapter('Files'));
+$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), 'username', 'password');
 $instagram->login(); // will use cached session if you want to force login $instagram->login(true)
 $instagram->saveSession();  //DO NOT forget this in order to save the session, otherwise have no sense
 $account = $instagram->getAccountById(3);
@@ -42,10 +42,10 @@ Using proxy for requests:
 // https://docs.guzzlephp.org/en/stable/request-options.html#proxy
 $instagram = new \InstagramScraper\Instagram(new \GuzzleHttp\Client(['proxy' => 'tcp://localhost:8125']));
 // Request with proxy
-$account = $instagram->getAccount('kevin');
+$account = $instagram->getAccountInfo('kevin');
 \InstagramScraper\Instagram::setHttpClient(new \GuzzleHttp\Client());
 // Request without proxy
-$account = $instagram->getAccount('kevin');
+$account = $instagram->getAccountInfo('kevin');
 ```
 
 ## Installation

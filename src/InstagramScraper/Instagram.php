@@ -45,9 +45,6 @@ class Instagram
 
     const X_IG_APP_ID = '936619743392459';
 
-    /** @var CacheInterface $instanceCache */
-    protected static $instanceCache = null;
-
     public $pagingTimeLimitSec = self::PAGING_TIME_LIMIT_SEC;
     public $pagingDelayMinimumMicrosec = self::PAGING_DELAY_MINIMUM_MICROSEC;
     public $pagingDelayMaximumMicrosec = self::PAGING_DELAY_MAXIMUM_MICROSEC;
@@ -83,9 +80,8 @@ class Instagram
      *
      * @return Instagram
      */
-    public static function withCredentials(ClientInterface $client, $username, $password, $cache)
+    public static function withCredentials(ClientInterface $client, $username, $password)
     {
-        static::$instanceCache = $cache;
         $instance = new self($client);
         $instance->sessionUsername = $username;
         $instance->sessionPassword = $password;
@@ -99,9 +95,8 @@ class Instagram
      *
      * @return Instagram
      */
-    public static function withUsername(ClientInterface $client, $username, $cache)
+    public static function withUsername(ClientInterface $client, $username)
     {
-        static::$instanceCache = $cache;
         $instance = new self($client);
         $instance->sessionUsername = $username;
         return $instance;
@@ -109,7 +104,7 @@ class Instagram
 
     public function loadSession()
     {
-        $session = static::$instanceCache->get($this->getCacheKey());
+        $session = cache()->get($this->getCacheKey());
         $this->userSession = $session;
         return $session;
     }
@@ -2186,7 +2181,7 @@ class Instagram
             $twoStepVerificator = new ConsoleVerification();
         }
 
-        $session = static::$instanceCache->get($this->getCacheKey());
+        $session = cache()->get($this->getCacheKey());
         if ($force || !$this->isLoggedIn($session)) {
             $response = Request::get(Endpoints::BASE_URL);
             if ($response->code === static::HTTP_FOUND) {
@@ -2240,7 +2235,7 @@ class Instagram
             $cookies = $this->parseCookies($response->headers);
 
             $cookies['mid'] = $mid;
-            static::$instanceCache->set($this->getCacheKey(), $cookies);
+            cache()->forever($this->getCacheKey(), $cookies);
             $this->userSession = $cookies;
         } else {
             $this->userSession = $session;
@@ -2285,7 +2280,7 @@ class Instagram
     public function isLoggedIn($session = null)
     {
         if ($session === null) {
-            $session = static::$instanceCache->get($this->getCacheKey());
+            $session = cache()->get($this->getCacheKey());
         }
         if (!isset($session['sessionid'])) {
             return false;
@@ -2394,7 +2389,7 @@ class Instagram
      */
     public function saveSession($ttl=null)
     {
-        static::$instanceCache->set($this->getCacheKey(), $this->userSession, $ttl);
+        cache()->put($this->getCacheKey(), $this->userSession, $ttl);
     }
 
     /**
