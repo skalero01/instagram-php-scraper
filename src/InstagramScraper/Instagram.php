@@ -60,8 +60,11 @@ class Instagram
      * Instagram constructor.
      * @param ClientInterface $client
      */
-    public function __construct(ClientInterface $client)
+    public function __construct($client = null)
     {
+        if(is_null($client)) {
+            $client = new Client();    
+        }
         Request::setHttpClient($client);
     }
 
