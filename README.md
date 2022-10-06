@@ -12,7 +12,6 @@ This library is based on the Instagram web version. We develop it because nowada
 use Phpfastcache\Helper\Psr16Adapter;
 
 $instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), 'username', 'password');
-$instagram->login();
 $account = $instagram->getAccountById(3);
 echo $account->getUsername();
 ```
@@ -29,8 +28,7 @@ If you use authentication it is recommended to cache the user session. In this c
 ```php
 use Phpfastcache\Helper\Psr16Adapter;
 
-$instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), 'username', 'password');
-$instagram->login(); // will use cached session if you want to force login $instagram->login(true)
+$instagram = \InstagramScraper\Instagram::withCredentials('username', 'password');
 $instagram->saveSession();  //DO NOT forget this in order to save the session, otherwise have no sense
 $account = $instagram->getAccountById(3);
 echo $account->getUsername();

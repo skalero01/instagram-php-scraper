@@ -12,189 +12,189 @@ class Account extends AbstractModel
      * User id
      * @var string
      */
-    protected $id = 0;
+    public $id = 0;
     
     /**
      * User id
      * @var string
      */
-    protected $fbid = 0;
+    public $fbid = 0;
 
     /**
      * Username
      * @var string
      */
-    protected $username = '';
+    public $username = '';
 
     /**
      * Full name
      * @var string
      */
-    protected $fullName = '';
+    public $fullName = '';
 
     /**
      * Profile picture url
      * @var string
      */
-    protected $profilePicUrl = '';
+    public $profilePicUrl = '';
 
     /**
      * Profile picture url HD
      * @var string
      */
-    protected $profilePicUrlHd = '';
+    public $profilePicUrlHd = '';
 
     /**
      * Information filled by user
      * @var string
      */
-    protected $biography = '';
+    public $biography = '';
 
     /**
      * Url provided by user in profile
      * @var string
      */
-    protected $externalUrl = '';
+    public $externalUrl = '';
 
     /**
      * Number of subscriptions
      * @var integer
      */
-    protected $followsCount = 0;
+    public $followsCount = 0;
 
     /**
      * Number of followers
      * @var integer
      */
-    protected $followedByCount = 0;
+    public $followedByCount = 0;
 
     /**
      * Number of medias published by user
      * @var integer
      */
-    protected $mediaCount = 0;
+    public $mediaCount = 0;
 
     /**
      * true if account is private
      * @var boolean
      */
-    protected $isPrivate = false;
+    public $isPrivate = false;
 
     /**
      * true if verified by Instagram as celebrity
      * @var boolean
      */
-    protected $isVerified = false;
+    public $isVerified = false;
 
     /**
      * @var bool
      */
-    protected $isLoaded = false;
+    public $isLoaded = false;
 
     /**
      * @var Media[]
      */
-    protected $medias = [];
+    public $medias = [];
 
     /**
      * @var bool
      */
-    protected $blockedByViewer = false;
+    public $blockedByViewer = false;
 
     /**
      * @var bool
      */
-    protected $countryBlock = false;
+    public $countryBlock = false;
 
     /**
      * @var bool
      */
-    protected $followedByViewer = false;
+    public $followedByViewer = false;
 
     /**
      * @var bool
      */
-    protected $followsViewer = false;
+    public $followsViewer = false;
 
     /**
      * @var bool
      */
-    protected $hasChannel = false;
+    public $hasChannel = false;
 
     /**
      * @var bool
      */
-    protected $hasClips = false;
+    public $hasClips = false;
 
     /**
      * @var bool
      */
-    protected $hasGuides = false;
+    public $hasGuides = false;
 
     /**
      * @var bool
      */
-    protected $hasBlockedViewer = false;
+    public $hasBlockedViewer = false;
 
     /**
      * @var int
      */
-    protected $highlightReelCount = 0;
+    public $highlightReelCount = 0;
 
     /**
      * @var bool
      */
-    protected $hasRequestedViewer = false;
+    public $hasRequestedViewer = false;
 
     /**
      * @var bool
      */
-    protected $isBusinessAccount = false;
+    public $isBusinessAccount = false;
 
     /**
      * @var bool
      */
-    protected $isProfessionalAccount = false;
+    public $isProfessionalAccount = false;
 
     /**
      * @var bool
      */
-    protected $isJoinedRecently = false;
+    public $isJoinedRecently = false;
 
     /**
      * @var string
      */
-    protected $businessCategoryName = '';
+    public $businessCategoryName = '';
 
     /**
      * @var string
      */
-    protected $businessEmail = '';
+    public $businessEmail = '';
 
     /**
      * @var string
      */
-    protected $businessPhoneNumber = '';
+    public $businessPhoneNumber = '';
 
     /**
      * @var string
      */
-    protected $businessAddressJson = '{}';
+    public $businessAddressJson = '{}';
 
     /**
      * @var bool
      */
-    protected $requestedByViewer = false;
+    public $requestedByViewer = false;
 
     /**
      * @var string
      */
-    protected $connectedFbPage = '';
+    public $connectedFbPage = '';
     
     /**
      * @var string
      */
-    protected $categoryName = '';
+    public $categoryName = '';
 
     /**
      * @return bool
@@ -504,7 +504,7 @@ class Account extends AbstractModel
      * @param $prop
      * @param $array
      */
-    protected function initPropertiesCustom($value, $prop, $array)
+    public function initPropertiesCustom($value, $prop, $array)
     {
         switch ($prop) {
             case 'id':
@@ -616,7 +616,7 @@ class Account extends AbstractModel
     /**
      * @param array $array
      */
-    protected function initMedia($array)
+    public function initMedia($array)
     {
         $this->mediaCount = !empty($array['count']) ? $array['count'] : 0;
         if (!$this->mediaCount || !isset($array['edges']) || !is_array($array['edges'])) {

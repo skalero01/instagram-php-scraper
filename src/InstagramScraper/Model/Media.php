@@ -22,185 +22,185 @@ class Media extends AbstractModel
     /**
      * @var string
      */
-    protected $id = '';
+    public $id = '';
 
     /**
      * @var string
      */
-    protected $shortCode = '';
+    public $shortCode = '';
 
     /**
      * @var int
      */
-    protected $createdTime = 0;
+    public $createdTime = 0;
 
     /**
      * @var string
      */
-    protected $type = '';
+    public $type = '';
 
     /**
      * @var string
      */
-    protected $link = '';
+    public $link = '';
 
     /**
      * @var string
      */
-    protected $imageLowResolutionUrl = '';
+    public $imageLowResolutionUrl = '';
 
     /**
      * @var string
      */
-    protected $imageThumbnailUrl = '';
+    public $imageThumbnailUrl = '';
 
     /**
      * @var string
      */
-    protected $imageStandardResolutionUrl = '';
+    public $imageStandardResolutionUrl = '';
 
     /**
      * @var string
      */
-    protected $imageHighResolutionUrl = '';
+    public $imageHighResolutionUrl = '';
 
     /**
      * @var array
      */
-    protected $squareImages = [];
+    public $squareImages = [];
 
     /**
      * @var array
      */
-    protected $carouselMedia = [];
+    public $carouselMedia = [];
 
     /**
      * @var string
      */
-    protected $caption = '';
+    public $caption = '';
 
     /**
      * @var bool
      */
-    protected $isCaptionEdited = false;
+    public $isCaptionEdited = false;
 
     /**
      * @var bool
      */
-    protected $isAd = false;
+    public $isAd = false;
 
     /**
      * @var string
      */
-    protected $videoLowResolutionUrl = '';
+    public $videoLowResolutionUrl = '';
 
     /**
      * @var string
      */
-    protected $videoStandardResolutionUrl = '';
+    public $videoStandardResolutionUrl = '';
 
     /**
      * @var integer
      */
-    protected $videoDuration = '';
+    public $videoDuration = '';
 
     /**
      * @var string
      */
-    protected $videoLowBandwidthUrl = '';
+    public $videoLowBandwidthUrl = '';
 
     /**
      * @var int
      */
-    protected $videoViews = 0;
+    public $videoViews = 0;
 
     /**
      * @var Account
      */
-    protected $owner;
+    public $owner;
 
     /**
      * @var int
      */
-    protected $ownerId = 0;
+    public $ownerId = 0;
 
     /**
      * @var int
      */
-    protected $likesCount = 0;
+    public $likesCount = 0;
 
     /**
      * @var boolean
      */
-    protected $hasLiked = null;
+    public $hasLiked = null;
 
     /**
      * @var
      */
-    protected $locationId;
+    public $locationId;
 
     /**
      * @var string
      */
-    protected $locationName = '';
+    public $locationName = '';
 
     /**
      * @var bool
      */
-    protected $commentsDisabled = false;
+    public $commentsDisabled = false;
 
     /**
      * @var string
      */
-    protected $commentsCount = 0;
+    public $commentsCount = 0;
 
     /**
      * @var Comment[]
      */
-    protected $comments = [];
+    public $comments = [];
 
     /**
      * @var Comment[]
      */
-    protected $previewComments = [];
+    public $previewComments = [];
 
     /**
      * @var bool
      */
-    protected $hasMoreComments = false;
+    public $hasMoreComments = false;
 
     /**
      * @var string
      */
-    protected $commentsNextPage = '';
+    public $commentsNextPage = '';
 
     /**
      * @var Media[]|array
      */
-    protected $sidecarMedias = [];
+    public $sidecarMedias = [];
 
     /**
      * @var string
      */
-    protected $locationSlug;
+    public $locationSlug;
 
     /**
      * @var string
      */
-    protected $altText;
+    public $altText;
 
     /**
      * @var string
      */
-    protected $locationAddressJson;
+    public $locationAddressJson;
     /**
      * @var array
      */
-    protected $taggedUsers=[];
+    public $taggedUsers=[];
     /**
      * @var array
      */
-    protected $taggedUsersIds=[];
+    public $taggedUsersIds=[];
     
     private $media_type;
 
@@ -568,7 +568,7 @@ class Media extends AbstractModel
      * @param $value
      * @param $prop
      */
-    protected function initPropertiesCustom($value, $prop, $arr)
+    public function initPropertiesCustom($value, $prop, $arr)
     {
         switch ($prop) {
             case 'pk':
@@ -623,7 +623,7 @@ class Media extends AbstractModel
             case 'thumbnail_resources':
                 $squareImagesUrl = [];
                 foreach ($value as $squareImage) {
-                    $squareImagesUrl[] = $squareImage['src'];
+                    $squareImagesUrl[] = $this->convertToBase64($squareImage['src']);
                 }
                 $this->squareImages = $squareImagesUrl;
                 break;
@@ -957,5 +957,13 @@ class Media extends AbstractModel
     public function getOwner()
     {
         return $this->owner;
+    }
+
+    public function convertToBase64($url)
+    {
+        return cache()->remember('base64:'.$url, now()->addWeek(), function() use ($url) {
+            $return = base64_encode(file_get_contents($url));
+            return "data:image/png;base64,".$return;
+        });
     }
 }

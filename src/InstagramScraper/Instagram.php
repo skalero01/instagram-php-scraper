@@ -27,6 +27,7 @@ use InvalidArgumentException;
 use InstagramScraper\Http\Request;
 use Psr\Http\Client\ClientInterface;
 use Psr\SimpleCache\CacheInterface;
+use GuzzleHttp\Client;
 use stdClass;
 
 class Instagram
@@ -80,11 +81,13 @@ class Instagram
      *
      * @return Instagram
      */
-    public static function withCredentials(ClientInterface $client, $username, $password)
+    public static function withCredentials($username, $password)
     {
+        $client = new Client();
         $instance = new self($client);
         $instance->sessionUsername = $username;
         $instance->sessionPassword = $password;
+        $instance->login();
         return $instance;
     }
 
