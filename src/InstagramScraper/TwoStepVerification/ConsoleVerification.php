@@ -31,7 +31,8 @@ class ConsoleVerification implements TwoStepVerificationInterface
                     print 'Wrong choice. Try again'.PHP_EOL;
                 }
                 print 'Your choice: ';
-                $selected_choice = trim(fgets(STDIN));
+                $stdin = fopen('php://stdin', 'r');
+                $selected_choice = trim(fgets($stdin));
             }
         } else {
             print 'Message with security code sent to: ' . $choices[0]['label'] .PHP_EOL;
@@ -51,7 +52,8 @@ class ConsoleVerification implements TwoStepVerificationInterface
                 print 'Wrong security code'.PHP_EOL;
             }
             print 'Enter security code: ';
-            $security_code = trim(fgets(STDIN));
+            $stdin = fopen('php://stdin', 'r');
+            $security_code = trim(fgets($stdin));
         }
         return $security_code;
     }
